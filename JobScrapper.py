@@ -17,26 +17,25 @@ chrome_options = Options()
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--window-size=1920x1080")
 
-email = "zxwind66@gmail.com"
-password = "Testtest123"
+#use your LinkedIn account and password to login 
+email = "YourAccount"
+password = "Password"
 
 #run login and return driver
 wd=LinkedInLogin().run(email,password)
 
-
-url_LA='https://www.linkedin.com/jobs/search/?f_JT=F&f_T=9%2C25201%2C3172&f_TPR=r86400&geoId=90000049&keywords=software%20engineer&location=Los%20Angeles%20Metropolitan%20Area&sortBy=R'
-url_remote='https://www.linkedin.com/jobs/search/?f_JT=F&f_T=9%2C25201%2C25194%2C3172&f_TPR=r86400&f_WRA=true&geoId=103644278&keywords=software%20engineer&location=United%20States&sortBy=R'
-
-wd.get(url_remote)
+#use your own job search link, here we have software engineer job search in the U.S. for example 
+url='https://www.linkedin.com/jobs/search?keywords=Software%20Engineer&location=United%20States&locationId=&geoId=103644278&sortBy=R&f_TPR=r86400&position=1&pageNum=0'
+wd.get(url)
 try:
     WebDriverWait(wd,5).until(EC.presence_of_element_located((By.CLASS_NAME, 'occludable-update')))
 except TimeoutException:
     wd.quit()
     pass 
 
-#number of jobs in LA 
-no_of_jobs_LA = wd.find_element_by_tag_name('small').get_attribute('innerText')
-no_of_jobs_LA=int(no_of_jobs_LA.split(' ')[0])
+#number of jobs  
+no_of_jobs = wd.find_element_by_tag_name('small').get_attribute('innerText')
+no_of_jobs=int(no_of_jobs.split(' ')[0])
 
 
 #Load job details into Dataframe
@@ -49,7 +48,7 @@ tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 
 #Browse all the jobs
 i = 1
-while i <= int(no_of_jobs_LA/25)+1: 
+while i <= int(no_of_jobs/25)+1: 
     #find jobs on each page
     jobs = wd.find_elements_by_class_name("occludable-update")
 
@@ -72,7 +71,7 @@ while i <= int(no_of_jobs_LA/25)+1:
                 yearsofexperience=p[index-3]
             else:
                 yearsofexperience=p[index-2]
-            if int(yearsofexperience)>2:
+            if int(yearsofexperience)>2:   #years of experience limit, here we set it at less than 2 years of experience for junior developer positions
                 continue
         except ValueError:
             pass
@@ -105,4 +104,4 @@ job_data = pd.DataFrame({
 # cleaning description column
 job_data['Description'] = job_data['Description'].str.replace('\n',' ')
 today=date.today()
-job_data.to_excel('LinkedIn Job Data_Remote_'+str(today)+'.xlsx', index = False)
+job_data.to_excel('LinkedIn Job Data_'+str(today)+'.xlsx', index = False)
