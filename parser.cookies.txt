@@ -1,0 +1,7 @@
+# Netscape HTTP Cookie File
+# http://curl.haxx.se/rfc/cookie_spec.html
+# This is a generated file!  Do not edit.
+
+.linkedin.com	TRUE	/	TRUE	1691052052	bcookie	"v=2&ac9f30a8-324c-4881-860f-afa500489c6f"
+.linkedin.com	TRUE	/	TRUE	1628024600	lidc	"b=TGST05:s=T:r=T:a=T:p=T:g=2311:u=1:x=1:i=1627938200:t=1628024600:v=2:sig=AQHH9T4yVg8nw6o-7sCQcXCCcoZHJL1Y"
+.www.linkedin.com	TRUE	/	TRUE	1691052052	bscookie	"v=1&20210802210320c34a28f9-acd2-43e6-8cc2-a6f11b1ed90dAQHjxWxoCHDfHpqiYcmnyyXkP7FobEa4"
